@@ -15,6 +15,10 @@ class Room < ActiveRecord::Base
     [id, 'posted'].join("-")
   end
 
+  def chat_channel
+    [id, 'chat'].join("-")
+  end
+
   def send_to_pubnub(channel, message)
     $pubnub.publish(channel: channel, message: message, callback: ->(m) {Rails.logger.info(m)})
   end
@@ -25,5 +29,9 @@ class Room < ActiveRecord::Base
 
   def send_message_to_posted_channel(message)
     send_to_pubnub(posted_channel, message)
+  end
+
+  def send_message_to_chat_channel(message)
+    send_to_pubnub(chat_channel, message)
   end
 end

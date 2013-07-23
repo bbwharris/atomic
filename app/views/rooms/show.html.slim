@@ -26,9 +26,14 @@
           $('#messages_posted').text(m);
         }
       });
+
+      pubnub.subscribe({
+        channel: "#{@room.chat_channel}",
+        message: function(m) {
+          $('#messages').append(m);
+        }
+      });
     })();
-
-
 
 
 .hero-unit

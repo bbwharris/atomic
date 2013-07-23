@@ -22,7 +22,9 @@ class MessagesController < ApplicationController
         @room.messages_posted.increment
         @room.send_message_to_posted_channel(@room.messages_posted.value)
         if @message.save
-          render template: '/messages/show', layout: false
+          message = render_to_string(partial: '/messages/message', layout: false, locals: {message: @message})
+          @room.send_message_to_chat_channel(message)
+          render nothing: true
         else
           logger.info @message.errors.inspect
         end
