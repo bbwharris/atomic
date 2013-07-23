@@ -1,0 +1,69 @@
+= content_for :head do
+  script src='http://cdn.pubnub.com/pubnub-3.5.3.min.js'
+
+= content_for :page_bottom do
+  javascript:
+    (function(){
+      var pubnub = PUBNUB.init({ 'subscribe_key' : 'sub-c-b8f67c24-f34b-11e2-a11a-02ee2ddab7fe' });
+
+      pubnub.subscribe({
+        channel: "#{@room.requested_channel}",
+        message: function(m) {
+          $('#messages_requested').text(m);
+        },
+        presence: function(message, event, channel) {
+          // console.log("Channel: ", channel);
+          // console.log("Join/Leave/Timeout: ", message.action);
+          // console.log("Occupancy: ", message.occupancy);
+          // console.log("User ID: ", message.uuid);
+          $('#connected').text(message.occupancy);
+        }
+      });
+
+      pubnub.subscribe({
+        channel: "#{@room.posted_channel}",
+        message: function(m) {
+          $('#messages_posted').text(m);
+        }
+      });
+    })();
+
+
+
+
+.hero-unit
+  .span12.offset3
+    p Scan this with a qr code reader to join:
+    = image_tag("https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=#{request.url}&chld=H|0")
+  div style='text-align:center;'
+    h1 Welcome to #{@room.name}
+
+
+ul.breadcrumb
+  li
+    = link_to "Back To Lobby", rooms_url
+    span.divider= "/"
+  li.active= @room.name
+
+
+ul#messages.media-list
+  = render partial: '/messages/message', collection: @room.messages
+
+= form_for @room.messages.build do |f|
+  = f.hidden_field :room_id, value: @room.id
+  .info
+    | Total Users Connected:&nbsp;
+    span#connected.badge.badge-info 1
+  .info
+    | Requested:&nbsp;
+    span#messages_requested.badge.badge-info= @room.messages_requested.value
+  .info
+    | Posted:&nbsp;
+    span#messages_posted.badge.badge-info= @room.messages_posted.value
+  .info
+    | Limit:&nbsp;
+    span#max_messages.badge.badge-important= @room.max_messages
+
+  = f.text_area :content
+  .controls
+    = f.submit "Send", class: 'btn btn-primary btn-large'

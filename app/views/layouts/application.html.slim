@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    title AoR Atomic Demo
+    meta name="description" content="A demonstration showing atomicity being respected in an application."
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "application"
+    = yield :head
+  body
+    .container
+      = yield
+    = yield :page_bottom
