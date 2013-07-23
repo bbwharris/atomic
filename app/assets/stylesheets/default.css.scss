@@ -1,5 +1,4 @@
 @import 'bootstrap';
-@import 'compass/css3/border-radius';
 
 textarea {
   width: 926px;
@@ -9,7 +8,11 @@ ul.media-list {
   li {
     padding: 8px 15px;
     border: 1px solid #c7c7c7;
-    @include border-radius(5px);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
     .media-heading {
       font-style: italic;
       color: #c7c7c7;
