@@ -1,16 +1,17 @@
-.row
-  .span12
-    h1 Lobby
-  .span6
-    h2 Atomic
-    #rooms-atomic
-      ul.nav.nav-tabs.nav-stacked
-        = render partial: '/rooms/room', collection: @rooms, locals: {non_atomic: false}
-  .span6
-    h2 Non-Atomic
-    #rooms-non-atomic
-      ul.nav.nav-tabs.nav-stacked
-        = render partial: '/rooms/room', collection: @rooms, locals: {non_atomic: true}
+- unless @rooms.empty?
+  .row
+    .span12
+      h1 Lobby
+    .span6
+      h2 Atomic
+      #rooms-atomic
+        ul.nav.nav-tabs.nav-stacked
+          = render partial: '/rooms/room', collection: @rooms, locals: {non_atomic: false}
+    .span6
+      h2 Non-Atomic
+      #rooms-non-atomic
+        ul.nav.nav-tabs.nav-stacked
+          = render partial: '/rooms/room', collection: @rooms, locals: {non_atomic: true}
 .row
   .span6.offset4
     h2 Create A New Room
