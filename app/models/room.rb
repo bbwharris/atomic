@@ -3,6 +3,7 @@ class Room < ActiveRecord::Base
 
   has_many :messages
   attr_accessible :name, :max_messages
+  attr_accessor :non_atomic
 
   counter :messages_requested
   counter :messages_posted

@@ -1,9 +1,19 @@
 .row
   .span12
-    h1 Rooms Available
-    #rooms
+    h1 Lobby
+  .span6
+    h2 Atomic
+    #rooms-atomic
       ul.nav.nav-tabs.nav-stacked
-        = render @rooms
+        = render partial: '/rooms/room', collection: @rooms, locals: {non_atomic: false}
+  .span6
+    h2 Non-Atomic
+    #rooms-non-atomic
+      ul.nav.nav-tabs.nav-stacked
+        = render partial: '/rooms/room', collection: @rooms, locals: {non_atomic: true}
+.row
+  .span12
+    h2 Create A New Room
     = form_for @room do |f|
       = f.label :name, "Room Name"
       = f.text_field :name

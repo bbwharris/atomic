@@ -1,1 +1,6 @@
-li.room= link_to room.name, room_url(room)
+li.room
+  - if non_atomic
+    = link_to room.name, room_url(room, non_atomic: true)
+  - else
+    = link_to room.name, room_url(room)
+  

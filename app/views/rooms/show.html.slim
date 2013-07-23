@@ -35,6 +35,16 @@
       });
     })();
 
+ul.breadcrumb
+  li
+    = link_to "Back To Lobby", rooms_url
+    span.divider= "/"
+  li.active= @room.name
+- if params[:non_atomic]
+  = link_to "Go To Atomic Version", room_url(@room), class: 'btn', style: 'margin-bottom: 15px;'
+  .alert.alert-error This room does not add messages atomically, the maximum messages limit can be violated
+- else
+  = link_to "Go To Non-Atomic Version", room_url(@room, non_atomic: true), class: 'btn', style: 'margin-bottom: 15px;'
 
 .hero-unit
   .span12.offset3
@@ -43,32 +53,31 @@
   div style='text-align:center;'
     h1 Welcome to #{@room.name}
 
-
-ul.breadcrumb
-  li
-    = link_to "Back To Lobby", rooms_url
-    span.divider= "/"
-  li.active= @room.name
-
-
 ul#messages.media-list
   = render partial: '/messages/message', collection: @room.messages
 
 = form_for @room.messages.build do |f|
+  - if params[:non_atomic]
+    = hidden_field_tag :non_atomic, true
   = f.hidden_field :room_id, value: @room.id
-  .info
-    | Total Users Connected:&nbsp;
-    span#connected.badge.badge-info 1
-  .info
-    | Requested:&nbsp;
-    span#messages_requested.badge.badge-info= @room.messages_requested.value
-  .info
-    | Posted:&nbsp;
-    span#messages_posted.badge.badge-info= @room.messages_posted.value
-  .info
-    | Limit:&nbsp;
-    span#max_messages.badge.badge-important= @room.max_messages
+  .row
+    .span3
+      .well
+        h4 Connections:
+        span#connected.badge.badge-info 1
+    .span3
+      .well
+        h4 Requested:
+        span#messages_requested.badge.badge-success= @room.messages_requested.value
+    .span3
+      .well
+        h4 Posted:
+        span#messages_posted.badge.badge-info= @room.messages_posted.value
+    .span3
+      .well
+        h4 Limit:
+        span#max_messages.badge.badge-important= @room.max_messages
 
-  = f.text_area :content
+  = f.text_field :content, class: 'chat-input'
   .controls
-    = f.submit "Send", class: 'btn btn-primary btn-large'
+    = f.submit "Post Message", class: 'btn btn-primary btn-large'
