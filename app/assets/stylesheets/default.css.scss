@@ -1,8 +1,7 @@
 @import 'bootstrap';
-
+@import 'bootstrap-responsive';
 .chat-input {
-  width: 926px;
-  height: 200px;
+  width: 99%;
 }
 ul.media-list {
   li {
@@ -23,6 +22,6 @@ ul.media-list {
   text-align: center;
 }
 .badge {
-  padding: 20px;
-  font-size: 46px;
+  padding: 0.5em;
+  font-size: 4em;
 }

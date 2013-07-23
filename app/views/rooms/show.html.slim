@@ -41,17 +41,15 @@ ul.breadcrumb
     span.divider= "/"
   li.active= @room.name
 - if params[:non_atomic]
-  = link_to "Go To Atomic Version", room_url(@room), class: 'btn', style: 'margin-bottom: 15px;'
+  = link_to "Go To Atomic Version", room_url(@room), class: 'btn', style: 'margin-bottom: 1em;'
   .alert.alert-error This room does not add messages atomically, the maximum messages limit can be violated
 - else
-  = link_to "Go To Non-Atomic Version", room_url(@room, non_atomic: true), class: 'btn', style: 'margin-bottom: 15px;'
+  = link_to "Go To Non-Atomic Version", room_url(@room, non_atomic: true), class: 'btn', style: 'margin-bottom: 1em;'
 
-.hero-unit
-  .span12.offset3
-    p Scan this with a qr code reader to join:
-    = image_tag("https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=#{request.url}&chld=H|0")
-  div style='text-align:center;'
-    h1 Welcome to #{@room.name}
+.hero-unit style='text-align: center;'
+  p Scan this with a qr code reader to join:
+  = image_tag("https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=#{request.url}&chld=H|0")
+  h1 Welcome to #{@room.name}
 
 ul#messages.media-list
   = render partial: '/messages/message', collection: @room.messages
